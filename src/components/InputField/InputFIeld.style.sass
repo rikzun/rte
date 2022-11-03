@@ -1,0 +1,30 @@
+.input-container
+    display: flex
+    flex-direction: column
+    position: relative
+    width: 410px
+    overflow: hidden
+
+    > .input-field
+        width: inherit
+        min-height: 32px
+        border: 1px solid
+        outline: unset
+        font-family: monospace
+        word-break: break-all
+        z-index: 2
+
+    > .overlay
+        width: inherit
+        height: 0
+        overflow-wrap: anywhere
+        position: absolute
+        font-family: monospace
+        padding: 1px
+        z-index: 1
+
+        > span
+            color: transparent
+
+            &.tt
+                background-color: rgba(0, 137, 255, 53%)
