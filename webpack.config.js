@@ -2,16 +2,14 @@ const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const ReactRefreshTypeScript = require('react-refresh-typescript')
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 const PATH_ENTRY = path.join(__dirname, 'src', 'index.tsx')
 const PATH_TEMPLATE_ENTRY = path.join(__dirname, 'static', 'index.html')
-
 const PATH_OUTPUT_FOLDER = path.join(__dirname, 'build')
-const PATH_SOURCE_FOLDER = path.join(__dirname, 'src')
-const PATH_STATIC_FOLDER = path.join(__dirname, 'static')
 
 module.exports = {
     mode: IS_PRODUCTION ? 'production' : 'development',
@@ -24,7 +22,7 @@ module.exports = {
         publicPath: 'auto'
     },
     resolve: {
-        extensions: ['.js', 'jsx', '.ts', '.tsx', 'css', '.scss'],
+        extensions: ['.js', 'jsx', '.ts', '.tsx', '.css', '.scss', '.sass'],
         fallback: { process: false }
     },
     devServer: {
@@ -38,23 +36,30 @@ module.exports = {
         rules: [
             {
                 test: /\.[jt]sx?$/,
-                include: PATH_SOURCE_FOLDER,
-                use: 'ts-loader'
+                use: [
+                    {
+                        loader: "ts-loader",
+                        options: {
+                            getCustomTransformers: () => ({
+                                before: [!IS_PRODUCTION && ReactRefreshTypeScript()].filter(Boolean)
+                            }),
+                            transpileOnly: !IS_PRODUCTION
+                        }
+                    }
+                ]
             },
             {
-                test: /\.s[ac]ss$/i,
-                include: PATH_SOURCE_FOLDER,
+                test: /\.s?[ca]ss$/i,
                 use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test: /\.css$/i,
-                include: PATH_SOURCE_FOLDER,
-                use: ['style-loader', 'css-loader']
+                test: /\.(png|jpe?g|gif|webp|ico)$/i,
+                type: 'asset'
             },
             {
-                test: /\.(png|jpe?g|gif|svg|webp|ico)$/i,
-                include: PATH_STATIC_FOLDER,
-                type: 'asset'
+                test: /\.svg$/i,
+                issuer: /\.[jt]sx?$/,
+                use: ["@svgr/webpack"]
             }
         ]
     },
@@ -67,6 +72,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name].[fullhash:8].css',
             chunkFilename: '[name].[chunkhash:8].css'
-        })
-    ]
+        }),
+        !IS_PRODUCTION && new ReactRefreshWebpackPlugin()
+    ].filter(Boolean)
 }
