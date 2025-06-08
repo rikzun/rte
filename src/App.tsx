@@ -1,26 +1,17 @@
-import './App.style.sass'
-import {InputField} from "./components/InputField";
-import {useEffect, useMemo, useState} from "react";
-import {getIndex, getMod} from "./utils/numbers";
+import './App.style.scss'
+import { InputField } from "./components/InputField"
+import { getIndex, getMod } from "./cypher"
+import { useStorage } from 'src/utils/react'
 
 export function App() {
-    const [state, setState] = useState('')
-    const [firstWord, setFirstWord] = useState('')
-
-    useEffect(() => {
-        setFirstWord(state.split(' ')[0].trimEnd())
-    }, [state])
-
-    const mod = useMemo(() => {
-        if (!firstWord) return null
-        return getMod(firstWord)
-    }, [firstWord])
+    const input = useStorage('')
+    const mod = getMod(input.value.split(' ')[0].trimEnd())
 
     const indexes = (() => {
         const arr: number[] = []
-        if (mod == null || !state) return arr
+        if (mod == null || !input.value) return arr
 
-        for (let i = 0; (arr[arr.length - 1] ?? 0) < state.length + 100; i++) {
+        for (let i = 0; (arr[arr.length - 1] ?? 0) < input.value.length + 100; i++) {
             const index = getIndex(mod, i)
             const previous = arr[arr.length - 1] ?? 0
 
@@ -33,13 +24,13 @@ export function App() {
     return (
         <div className="container">
             <InputField
-                value={state}
-                onChange={(v) => setState(v)}
+                value={input.value}
+                onChange={input.set}
                 indexes={indexes}
             />
 
             <div className="output">
-                {indexes.map((v) => state[v])}
+                {indexes.map((v) => input.value[v])}
             </div>
         </div>
     )

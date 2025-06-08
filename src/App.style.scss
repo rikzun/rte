@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Roboto Mono", monospace;
+
+    #root {
+        display: flex;
+        min-height: inherit;
+        align-items: center;
+        justify-content: center;
+
+        > .container {
+            display: flex;
+            flex-direction: row;
+            width: 836px;
+
+            > .output {
+                line-break: anywhere;
+                margin-left: 1rem;
+                width: 410px;
+            }
+        }
+    }
+}
