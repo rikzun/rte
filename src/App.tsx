@@ -1,7 +1,7 @@
 import './App.style.scss'
-import { InputField } from "./components/InputField"
+import { InputField } from "@components/InputField"
 import { getIndex, getMod } from "./cypher"
-import { useStorage } from 'src/utils/react'
+import { useStorage } from '@utils/react'
 
 export function App() {
     const input = useStorage('')

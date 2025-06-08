@@ -1,4 +1,4 @@
-import {ClipboardEvent, FormEvent, ReactNode, useMemo} from "react";
+import { ClipboardEvent, FormEvent, ReactNode, useMemo } from "react"
 import './InputFIeld.style.sass'
 
 interface InputFieldProps {
