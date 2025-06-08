@@ -1,0 +1,64 @@
+/*!*************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/App.style.scss ***!
+  \*************************************************************************************************************/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Roboto Mono", monospace;
+}
+body #root {
+  display: flex;
+  min-height: inherit;
+  align-items: center;
+  justify-content: center;
+}
+body #root > .container {
+  display: flex;
+  flex-direction: row;
+  width: 836px;
+}
+body #root > .container > .output {
+  line-break: anywhere;
+  margin-left: 1rem;
+  width: 410px;
+}
+/*!******************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/InputField/InputFIeld.style.sass ***!
+  \******************************************************************************************************************************************/
+.input-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 410px;
+  overflow: hidden;
+}
+.input-container > .input-field {
+  width: inherit;
+  min-height: 32px;
+  border: 1px solid;
+  outline: unset;
+  font-family: monospace;
+  word-break: break-all;
+  z-index: 2;
+}
+.input-container > .overlay {
+  width: inherit;
+  height: 0;
+  overflow-wrap: anywhere;
+  position: absolute;
+  font-family: monospace;
+  padding: 1px;
+  z-index: 1;
+}
+.input-container > .overlay > span {
+  color: transparent;
+}
+.input-container > .overlay > span.tt {
+  background-color: rgba(0, 137, 255, 0.53);
+}
+
+/*# sourceMappingURL=main.css.map*/
